@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+      #customers {
+          font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+          border-collapse: collapse;
+          width: 50%;
+      }
+
+      #customers td, #customers th {
+          border:1px solid #ddd;
+          padding:8px;
+      }
+
+      #customers tr:nth-child(even){background-color: #f2f2f2;}
+
+      #customers tr:hover {background-color: #ddd;}
+
+      #customers th {
+          padding-top: 12px;
+          padding-bottom: 12px;
+          text-align: center;
+          background-color: #dddddd;
+          color: white;
+      }
+</style>
+
+</head>
+<body>
+
+<div class="jumbotron text-center">
+  <h1>ARCHITECTURE TEAM★</h1>
+  <section ng-controller="ExampleController">
+  <div data-ng-show="!authentication.user">
+      <a href="/signup">Signup</a>
+      <a href="/signin">Signin</a>
+ </div>
+</div>
+</section>
+<section data-ng-controller="ArticlesController" data-ng-init="find()" class="text-center">
+
+
+  <div data-ng-show="authentication.user" class="text-center">
+      <h4><span data-ng-bind="authentication.user.username"></span>님</h4>
+      <a href="/signout">Signout</a>
+    </div>
+
+  <h1 >회의록목록</h1><a href="/#!/articles/create" class="btn btn-info" role="button">회의록 작성</a></br></br></br>
+  <table id='customers' align="center" class="text-center" width="300px">
+    <tr>
+
+      <th align="center">created</th>
+      <th align="center">title</th>
+      <th align="center">creator</th>
+
+    </tr>
+    <tr data-ng-repeat="article in articles">
+      <td data-ng-bind="article.created | date:'medium'"></td>
+      <td><a data-ng-href="#!/articles/{{article._id}}" data-ng-bind="article.title"></a></td>
+      <td data-ng-bind="article.creator.username"></td>
+    </tr>
+  </table>
+
+  <div data-ng-hide="!articles || articles.length">
+    No articles yet, why don't you <a href="/#!/articles/create">
+      create
+      one
+    </a>?
+  </div>
+
+</section>
+
+</body>
+</html>

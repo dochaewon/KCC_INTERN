@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>회의록 작성</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+      div.container {
+          width: 80%;
+          border: 1px solid gray;
+          text-align: center;
+      }
+
+      header, footer {
+          padding: 1em;
+          color: white;
+          background-color: grey;
+          clear: left;
+          text-align: center;
+      }
+
+      nav {
+          float: left;
+          max-width: 160px;
+          margin: 0;
+          padding: 1em;
+      }
+
+      nav ul {
+          list-style-type: none;
+          padding: 0;
+      }
+
+      nav ul a {
+          text-decoration: none;
+      }
+
+      article {
+          margin-left: 170px;
+          border-left: 1px solid gray;
+          padding: 1em;
+          overflow: hidden;
+      }
+      table, th, td {
+          border: 1px solid grey;
+          border-collapse: collapse;
+      }
+      th, td {
+          padding: 5px;
+          text-align: center;
+          font-size: 20px;
+      }
+      th {
+        background-color: #ebebe0;
+      }
+</style>
+</head>
+<body>
+<section data-ng-controller="ArticlesController">
+      <form name="myForm" data-ng-submit="create()" novalidate >
+  <header>
+     <h1>업무협의 회의록</h1>
+     <small>Architecture Team</small></br></br></br>
+  </header>
+  <table style="width:50%" align="center">
+  	<tr>
+      <th colspan="4">
+      회의록
+      </th>
+    </tr>
+    <tr>
+      <th >회의제목</th>
+      <td colspan="4">
+        <input name="title" type="text" class="form-control" data-ng-model="title" id="title" placeholder="Title" ng-required="true">
+        <span style="color:red" ng-show="myForm.title.$touched && myForm.title.$invalid">
+        <span ng-show="myForm.title.$error.required">*title is required.</span>
+    </tr>
+     <tr>
+      <th>일시</th>
+      <td>
+        <input name="date" type="date" class="form-control" data-ng-model="date" id="date" placeholder="Date" ng-required="true" >
+        <span style="color:red" ng-show="myForm.date.$touched && myForm.date.$invalid">
+        <span ng-show="myForm.date.$error.required">*date is required.ex)0000-00-00</span>
+      </td>
+      <th>장소</th>
+      <td>
+        <input name="place" type="Place" class="form-control" data-ng-model="place" id="place" placeholder="Place" ng-required="true">
+        <span style="color:red" ng-show="myForm.place.$touched && myForm.place.$invalid">
+        <span ng-show="myForm.place.$error.required">*place is required.</span>
+      </td>
+    </tr>
+    <form ng-button="addNew()" >
+    <tr>
+
+          <tr >
+              <th colspan="4">참석자
+                <div class="form-group">
+                    <input type="button" class="btn btn-primary addnew" ng-click="addNew()" value="+">
+                    <input type="button" class="btn btn-danger " ng-click="remove()" value="-">
+                </div></th>
+              </tr>
+
+
+              <th colspan="2">소속</th>
+              <th>직급</th>
+              <th>성명</th>
+          </tr>
+
+
+          <tr ng-repeat="personalDetail in personalDetails ">
+              <td>
+                  <input type="checkbox" ng-model="personalDetail.selected"/></td>
+              <td>
+                  <input type="text" name="personalDetail.name"class="form-control" ng-model="personalDetail.company" required/></td>
+              <td>
+                  <input type="text" class="form-control" ng-model="personalDetail.rank" required/></td>
+              <td>
+                  <input type="text" class="form-control" ng-model="personalDetail.name" required/></td>
+          </tr>
+
+
+    </tr></br>
+    </form>
+    </br>
+   <table style="width:50%" align="center">
+  	<tr>
+      <th colspan="4">
+      주 요 내 용
+      </th>
+    </tr>
+    <tr>
+      <th >회의안건</th>
+      <td colspan="4">
+        <input name="topic" type="text" class="form-control" data-ng-model="topic" id="topic" placeholder="topic" required>
+        <span style="color:red" ng-show="myForm.topic.$touched && myForm.topic.$invalid">
+        <span ng-show="myForm.topic.$error.required">*topic is required.</span>
+      </td>
+    </tr>
+    <tr>
+      <th >회의내용</th>
+
+      <td colspan="4">
+        <textarea name="content" class="form-control" data-ng-model="content" ng-bind-html id="content" cols="30" rows="10"
+          placeholder="Content" required></textarea></td>
+
+    </tr>
+     <tr>
+      <th>승인자</th>
+      <td>  <input type="text" class="form-control" data-ng-model="approver" id="approver" placeholder="approver" required></td>
+      <th>승인자</th>
+      <td>  <input type="text" class="form-control" data-ng-model="approver2" id="approver2" placeholder="approver2" required></td>
+
+    </tr>
+    <tr>
+      <th>승인일</th>
+      <td>
+        <input  type="date" class="form-control" data-ng-model="approverDate" id="approverDate" placeholder="approverDate" required></td>
+      <th>승인일</th>
+      <td>  <input type="date" class="form-control" data-ng-model="approverDate2" id="approverDate2" placeholder="approverDate2" required></td>
+    </tr>
+    </table>
+
+    <footer>
+      <div>
+        <input type="submit"  >
+      </div>
+      <div data-ng-show="error">
+        <strong data-ng-bind="error"></strong>
+      </div>
+    </footer>
+    </form>
+
+</section>
+</body>
+</html>

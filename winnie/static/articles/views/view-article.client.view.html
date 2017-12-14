@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>업무협의 회의록</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+        div.container {
+            width: 80%;
+            border: 1px solid gray;
+        }
+
+        header, footer {
+            padding: 1em;
+            color: white;
+            background-color:grey;
+            clear: left;
+            text-align: center;
+        }
+
+        nav {
+            float: left;
+            max-width: 160px;
+            margin: 0;
+            padding: 1em;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul a {
+            text-decoration: none;
+        }
+
+        article {
+            margin-left: 170px;
+            border-left: 1px solid gray;
+            padding: 1em;
+            overflow: hidden;
+        }
+        table, th, td {
+            border: 0.5px solid grey;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+
+            font-size: :20px;
+            white-space: pre-line;
+        }
+        th {
+          background-color: #ebebe0;
+          width: 10%;
+          text-align: center;
+        }
+</style>
+</head>
+<body>
+ <section data-ng-controller="ArticlesController" data-ng-init="findOne()">
+  <header>
+     <h1>업무협의 회의록</h1>
+     <small>Architecture Team</small></br></br></br>
+     <small 작성자 : data-ng-bind="article.creator.username"></small>
+     <small 작성일 :data-ng-bind="article.created | date : 'medium'"></small>
+     <div data-ng-show="authentication.user._id == article.creator._id">
+            <a href="/#!/articles/{{article._id}}/edit">edit</a>
+            <a href="#" onclick="confirm('Do you want to delete this?')?this.parentElement.submit():null;"data-ng-click="delete();">Delete</a>
+            <!-- <a href="#" data-ng-click="delete();"data-ng-confirm-click="Do you want to delete this?">delete</a> -->
+        </div>
+  </header>
+  <table style="width:50%" align="center">
+  	<tr>
+      <th colspan="4" height="20">
+      회의록
+      </th>
+    </tr>
+    <tr>
+      <th> 회의제목 </th>
+      <td colspan="4" , data-ng-bind="article.title"> </td>
+    </tr>
+     <tr>
+      <th>일시</th>
+      <td    data-ng-bind="article.date | date:'yyyy-MM-dd'" ></td>
+      <th>장소</th>
+      <td     data-ng-bind="article.place"></td>
+    </tr>
+  </table>
+  <table style="width:50%" align="center">
+    <tr>
+
+          <tr>
+              <th colspan="6" height="20" >참석자</th>
+            </tr>
+            <tr>
+              <th colspan="2">소속</th>
+              <th colspan="2">직급</th>
+              <th colspan="1">성명</th>
+          </tr>
+
+
+          <tr data-ng-repeat="personalDetail in article.personalDetails" >
+
+               <td colspan="2" align="center">{{personalDetail.company}}</td>
+               <td  colspan="2"align="center">{{personalDetail.rank}}</td>
+               <td align="center">{{personalDetail.name}}</td>
+          </tr>
+
+
+    </tr>
+    </table>
+   <table style="width:50%"  align="center">
+  	<tr>
+      <th colspan="4">
+      주 요 내 용
+      </th>
+    </tr>
+    <tr>
+      <th >회의안건</th>
+      <td colspan="4" ,  data-ng-bind="article.topic"></td>
+    </tr>
+    <tr>
+      <th >회의내용</th>
+
+      <td colspan="4", height="500", data-ng-bind="article.content"></td>
+
+    </tr>
+     <tr>
+      <th>승인자</th>
+      <td  data-ng-bind="article.approver"></td>
+      <th>승인자</th>
+      <td  data-ng-bind="article.approver2"></td>
+
+    </tr>
+    <tr>
+      <th>승인일</th>
+      <td data-ng-bind="article.approverDate | date:'yyyy-MM-dd'"></td>
+      <th>승인일</th>
+      <td data-ng-bind="article.approverDate2 | date:'yyyy-MM-dd'"></td>
+    </tr>
+    </table>
+    <footer><div>
+      <a href="/#!"><button>목록으로 돌아가기</button></a>
+    </div>
+    <div data-ng-show="error">
+      <strong data-ng-bind="error"></strong>
+    </div></footer>
+
+    </form>
+
+</section>
+
+
+</body>
+</html>

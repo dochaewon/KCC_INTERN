@@ -1,0 +1,16 @@
+{
+  "name": "node_hbase",
+  "version": "0.0.0",
+  "description": "test hbase",
+  "main": "listTables.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "thrift": "~0.9.1",
+    "express": "^4.15.5"
+  },
+  "devDependencies": {},
+  "author": ""
+}
